@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Banner from './Banner'
 import logo from '../assets/logo.png'
 import Cart from './Cart'
@@ -6,8 +6,13 @@ import Footer from './Footer'
 import ShoppingList from './ShoppingList'
 import '../styles/Layout.css'
 
+const LOCAL_KEY_STORAGE = 'LMJ.com'
+
 function App() {
-	const [cart, updateCart] = useState([])
+	const storedCart = localStorage.getItem(LOCAL_KEY_STORAGE);
+	const [cart, updateCart] = useState(storedCart ? JSON.parse(storedCart):[]);
+	
+	useEffect(()=>{localStorage.setItem(LOCAL_KEY_STORAGE, JSON.stringify(cart))},[cart]);
 	return (
 		<div>
 			<Banner>
